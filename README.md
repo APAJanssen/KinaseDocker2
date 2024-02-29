@@ -2,7 +2,8 @@
 *A PyMOL plugin with accompanying Docker image for kinase inhibitor binding and affinity prediction*
 
 KinaseDocker² is a computational tool that implements fully automated docking and scoring. The tool allows for docking in either AutoDock VinaGPU or DiffDock and subsequent scoring by a Deep Neural Network that has been trained on kinase-inhibitor docking poses. This tool can both be installed as a PyMOL plugin and used through the CLI.
-In the backend, it uses a Docker image to run the GPU-accelerated VinaGPU, DiffDock and PyTorch DNN implementation.
+
+In the backend, it uses a Docker image to run the GPU-accelerated VinaGPU, DiffDock and PyTorch DNN implementation. The instructions below assume you have a working GPU-enable Docker installation on your system. Refer to guides such as https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html for detailed Docker installation instructions.
 
 ## How to install (PyMOL plugin):
 ### 1. Setup conda environment:
