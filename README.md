@@ -29,10 +29,9 @@ pip install meeko==0.3.3 scipy docker pandas rdkit
 ```
 
 ### 2. Setup docker image:
-- Download the docker image: kinasedocker_v1_0.tar # Will be replaced for `docker pull`
-- Load the docker image
+- Download and load the docker image
 ```bash
-docker load -i kinasedocker_v1_0.tar
+docker pull apajanssen/kinasedocker2
 ```
 
 ### 3. Install plugin into PyMOL
