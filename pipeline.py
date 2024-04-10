@@ -56,7 +56,7 @@ class Pipeline:
         self.container = None
         self.client = docker.from_env()
 
-        self.docker_kwargs = dict(image='kinasedocker_v1_0',
+        self.docker_kwargs = dict(image='apajanssen/kinasedocker2',
                                   runtime='nvidia',
                                   device_requests=[dev_req(device_ids=['0'], capabilities=[['gpu']])])
 
