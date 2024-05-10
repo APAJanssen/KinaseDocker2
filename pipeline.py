@@ -446,7 +446,7 @@ class VinaGPU():
         - Ligand preparation via rdkit and meeko
         - Target preparation via ADFR Suite and pdb_tools
     """
-    def __init__(self, docker_image_name='kinasedocker_v1_0', devices=['0'], out_path=None):
+    def __init__(self, docker_image_name='apajanssen/kinasedocker2', devices=['0'], out_path=None):
         self.device = 'gpu'
         self.device_id = devices
 
