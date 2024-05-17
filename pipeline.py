@@ -292,6 +292,8 @@ class Pipeline:
         pose_results['pIC50'] = pose_results['pIC50'].apply(lambda x: round(x, 2)) # Round pIC50 to 2 decimals
 
         # Save pose results to .SDF
+        # remove empty molecules
+        pose_results = pose_results[pose_results['Molecule'].apply(lambda x: x is not None)]
         PandasTools.WriteSDF(pose_results, os.path.join(self.results_path, f'{self.run_name}_{self.docking_software}_results.sdf'), molColName='Molecule', idName='SMILES', properties=list(pose_results.columns))
 
         # Aggregate pose results

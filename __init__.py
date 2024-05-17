@@ -1,6 +1,8 @@
 '''
 First two functions are pymol's plugin setup
 '''
+import logging
+
 
 def __init_plugin__(app=None):
     '''
@@ -311,8 +313,17 @@ def make_dialog():
 
             # Retrieve properties
             for i, mol in enumerate(molecules):
-                properties = [mol, mol.GetProp('_Name')] + [mol.GetProp(prop) for prop in property_names]
-                all_props.append(properties)
+                if not mol:
+                    logging.warning(f'Could not parse molecule {i} in RDKit')
+                    continue
+                try:
+                    name = mol.GetProp('_Name')
+                    properties = [mol, name]
+                    properties += [mol.GetProp(prop) for prop in property_names]
+                    all_props.append(properties)
+                except KeyError:
+                    logging.warning(f'Could not retrieve properties for molecule {Chem.MolToSmiles(mol)}')
+                    continue
 
             # Create dataframe
             self.pose_results = pd.DataFrame(all_props, columns=['Molecule', 'SMILES'] + property_names)
