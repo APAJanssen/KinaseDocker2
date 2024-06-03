@@ -8,7 +8,7 @@ import zlib
 
 import docker
 import pandas as pd
-from pymol import cmd
+# from pymol import cmd
 from rdkit import Chem
 from rdkit.Chem import PandasTools
 
@@ -40,7 +40,7 @@ class Pipeline:
         self.scoring_algorithm = scoring_algorithm
 
         # Setup paths
-        self.output_path = os.path.join(output_path, self.run_name)
+        self.output_path = os.path.abspath(os.path.join(output_path, self.run_name))
         self.pdb_path = os.path.join(self.output_path, 'pdb')
         self.docking_path = os.path.join(self.output_path, 'intermediate_input_' + self.docking_software)
         self.model_path = os.path.join(self.output_path, 'intermediate_input_' + self.scoring_algorithm)
@@ -57,7 +57,6 @@ class Pipeline:
         self.client = docker.from_env()
 
         self.docker_kwargs = dict(image='apajanssen/kinasedocker2',
-                                  runtime='nvidia',
                                   device_requests=[dev_req(device_ids=['0'], capabilities=[['gpu']])])
 
     def run(self):
@@ -446,7 +445,7 @@ class VinaGPU():
         - Ligand preparation via rdkit and meeko
         - Target preparation via ADFR Suite and pdb_tools
     """
-    def __init__(self, docker_image_name='kinasedocker_v1_0', devices=['0'], out_path=None):
+    def __init__(self, docker_image_name='apajanssen/kinasedocker2', devices=['0'], out_path=None):
         self.device = 'gpu'
         self.device_id = devices
 
@@ -470,7 +469,6 @@ class VinaGPU():
 
         self.docker_kwargs = dict(
             image=docker_image_name,
-            runtime='nvidia',    # Use nvidia-docker runtime
             volumes = [f'{self.out_path}:{self.docking_dir}'],
             device_requests=[dev_req(device_ids=devices, capabilities=[['gpu']])])
         
